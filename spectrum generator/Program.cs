@@ -14,7 +14,7 @@ class Program
     [STAThread]
     static void Main(string[] args)
     {
-        // 1️⃣ Select audio file
+        // select audio file
         string audioPath = "";
         if (args.Length > 0)
             audioPath = args[0];
@@ -22,7 +22,7 @@ class Program
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                ofd.Filter = "Audio Files|*.wav;*.flac";
+                ofd.Filter = "Audio Files|*.mp3;*.wav;*.flac";
                 ofd.Title = "Select an audio file";
 
                 if (ofd.ShowDialog() == DialogResult.OK)
@@ -51,7 +51,7 @@ class Program
             totalSeconds = wav.TotalTime.TotalSeconds;
         }
 
-        // 2️⃣ Settings
+        // settings
         int width = 1280;
         int height = 720;
         int fftSize = 1024;
@@ -63,7 +63,7 @@ class Program
         float[] frameBuffer = new float[samplesPerFrame];
         Complex[] fftBuffer = new Complex[fftSize];
 
-        // 3️⃣ Create temporary frames folder
+        // create temporary frames folder
         string tempFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TempFrames");
         Directory.CreateDirectory(tempFolder);
 
@@ -97,13 +97,13 @@ class Program
 
                     int red = (int)(normalizedHeight * 255);
                     int green = 255 - red;
-                    Color barColor = Color.FromArgb(255, red, green, 50);
+                    Color barColor = Color.FromArgb(255, 50, green, red);
 
                     using (var brush = new SolidBrush(barColor))
                         g.FillRectangle(brush, i * barWidth, height - barHeight, barWidth - 2, barHeight);
                 }
 
-                // Save frame as PNG
+                // save frame as png PLEASE
                 string framePath = Path.Combine(tempFolder, $"frame{frameCount:D5}.png");
                 bmp.Save(framePath, ImageFormat.Png);
             }
@@ -111,9 +111,9 @@ class Program
             DrawProgressBar(frameCount + 1, totalFrames);
         }
 
-        Console.WriteLine("\nRendering complete! Merging with audio...");
+        Console.WriteLine("\nRendering complete! :3\nMerging with audio...");
 
-        // 4️⃣ Merge frames and audio
+        // merge frames and audio
         string outputVideo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "VisualizerWithAudio.mp4");
         string ffmpegPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ffmpeg", "ffmpeg.exe");
 
@@ -131,7 +131,7 @@ class Program
 
         Console.WriteLine("Final video saved as " + outputVideo);
 
-        // 5️⃣ Delete temporary frames
+        // garbage collection
         Directory.Delete(tempFolder, true);
     }
 
