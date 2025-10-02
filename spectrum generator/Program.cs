@@ -22,7 +22,7 @@ class Program
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                ofd.Filter = "Audio Files|*.wav;*.flac";
+                ofd.Filter = "Audio Files|*.mp3;*.wav;*.flac";
                 ofd.Title = "Select an audio file";
 
                 if (ofd.ShowDialog() == DialogResult.OK)
@@ -97,7 +97,7 @@ class Program
 
                     int red = (int)(normalizedHeight * 255);
                     int green = 255 - red;
-                    Color barColor = Color.FromArgb(255, red, green, 50);
+                    Color barColor = Color.FromArgb(255, 50, green, red);
 
                     using (var brush = new SolidBrush(barColor))
                         g.FillRectangle(brush, i * barWidth, height - barHeight, barWidth - 2, barHeight);
@@ -111,7 +111,7 @@ class Program
             DrawProgressBar(frameCount + 1, totalFrames);
         }
 
-        Console.WriteLine("\nRendering complete! Merging with audio...");
+        Console.WriteLine("\nRendering complete! :3\nMerging with audio...");
 
         // 4️⃣ Merge frames and audio
         string outputVideo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "VisualizerWithAudio.mp4");
